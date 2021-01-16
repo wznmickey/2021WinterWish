@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>2021WinterWish</title>
+</head>
+
+<body>
+
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
+
+
+    <input placeholder="写" type="text" id="entry_wish" value="">
+
+    <button type="button" id="entry_btn" onclick="upload()"
+        style="background-color: rgba(255, 255, 255, .2);">上传</button>
+    <button type="button" id="entry_btn" onclick="logout()"
+        style="background-color: rgba(255, 255, 255, .2);">登出</button>
+    <div id="message">
+    </div>
+    <script>
+        AV.init({
+            appId: "cy0b6FlSYXlPzf7gnQ8Bo0pM-9Nh9j0Va",
+            appKey: "Hgm2pDpYapTv2BJ0LCBuIaGP",
+            serverURL: "http://api2.wznmickey.com"
+        });
+        const currentUser = AV.User.current();
+        if (currentUser) {
+
+        } else {
+            window.location.href = "index.html";
+        }
+        function logout() { AV.User.logOut(); window.location.href = "index.html"; }
+        function upload() {
+            var word = document.getElementById("entry_wish").value;
+            var currentUser = AV.User.current();
+            const Words = AV.Object.extend('Words');
+            var query = new AV.Query('Words');
+            query.equalTo('user', currentUser);
+            query.count().then((count) => {
+                if (count == 0) {
+                    const words = new Words();
+                    words.set('words', word);
+                    words.set('user', currentUser);
+                    words.save();
+                }
+                else {
+                    query.first().then((words) => {
+                        words.set('words', word);
+                        words.set('user', currentUser);
+                        words.save();
+                    })
+                }
+            });
+            document.getElementById("message").innerHTML = word;
+            //document.getElementById("message").innerHTML = uploaded.word;
+        }
+    </script>
+</body>
+
+</html>

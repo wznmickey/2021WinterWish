@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>2021WinterWish</title>
+
+</head>
+
+<body>
+
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
+
+
+    <input placeholder="输入邮箱" type="text" id="entry_email" value="">
+    <input placeholder="输入密码" type="password" id="entry_pass" value="">
+
+    <button type="button" id="entry_btn" onclick="sign()"
+        style="background-color: rgba(255, 255, 255, .2);">登录/注册</button>
+    <div id="message">
+    </div>
+    <script>
+        AV.init({
+            appId: "cy0b6FlSYXlPzf7gnQ8Bo0pM-9Nh9j0Va",
+            appKey: "Hgm2pDpYapTv2BJ0LCBuIaGP",
+            serverURL: "http://api2.wznmickey.com"
+        });
+        function sign() {
+            const user = new AV.User();
+
+            user.setUsername(document.getElementById("entry_email").value);
+            user.setPassword(document.getElementById("entry_pass").value);
+
+            // 可选
+            user.setEmail(document.getElementById("entry_email").value);
+            //user.setMobilePhoneNumber('+8618200008888');
+
+            user.set('gender', 'secret');
+
+            user.signUp().then(function (loginedUser) {
+                AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function (loginedUser) {
+
+                }, function (error) {
+                    document.getElementById("message").innerHTML = "注册错误";
+                });
+            }, (function (error) {
+                AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function (loginedUser) {
+                }, function (error) {
+                    document.getElementById("message").innerHTML = "登录错误";
+                });
+            }));
+            const currentUser = AV.User.current();
+            if (currentUser) {
+                window.location.href = "write.html";
+            } else {
+                // 显示注册或登录页面
+            }
+        }
+
+    </script>
+</body>
+
+</html>
