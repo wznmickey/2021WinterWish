@@ -37,12 +37,13 @@
 
             user.signUp().then(function (loginedUser) {
                 AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function (loginedUser) {
-
+                    window.location.href = "write.html";
                 }, function (error) {
                     document.getElementById("message").innerHTML = "注册错误";
                 });
             }, (function (error) {
                 AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function (loginedUser) {
+                    window.location.href = "write.html";
                 }, function (error) {
                     document.getElementById("message").innerHTML = "登录错误";
                 });
