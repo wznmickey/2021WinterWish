@@ -2,7 +2,8 @@
 
 UMJI 2021WinterWish
 
-在index页面实现登录和注册，在write页面书写愿望、上传及退出登录
+在index页面实现登录和注册，在write页面书写愿望、上传及退出登录。
+
 数据存储在[leancloud](https://www.leancloud.cn/)
 
 ## Todo
