@@ -30,6 +30,16 @@
         } else {
             window.location.href = "index.html";
         }
+        var query = new AV.Query('Words');
+        query.equalTo('user', currentUser);
+        query.count().then((count) => {
+            if (count == 0) {
+            }
+            else {
+                query.first().then((words) => {
+                    document.getElementById('entry_wish').value = words.get('words');
+                });
+        }});
         function logout() { AV.User.logOut(); window.location.href = "index.html"; }
         function upload() {
             var word = document.getElementById("entry_wish").value;
