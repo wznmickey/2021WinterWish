@@ -3,20 +3,21 @@
 
 <head>
     <title>2021WinterWish</title>
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" type="text/css" href="style2.css">
 </head>
 
 <body>
 
     <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
 
-
-    <input placeholder="写" type="text" id="entry_wish" value="">
-
-    <button type="button" id="entry_btn" onclick="upload()"
-        style="background-color: rgba(255, 255, 255, .2);">上传</button>
-    <button type="button" id="entry_btn" onclick="logout()"
-        style="background-color: rgba(255, 255, 255, .2);">登出</button>
-    <div id="message">
+    <div class="index">
+        <p><textarea id="entry_wish" class="inputA"></textarea></p>
+        <button type="button" id="entry_btn" onclick="upload()" style="background-color: rgba(255, 255, 255, .2);" class="inputB">上传</button>
+        <button type="button" id="entry_btn" onclick="logout()" style="background-color: rgba(255, 255, 255, .2);" class="inputB">登出</button>
+        <div id="message">
+        </div>
     </div>
     <script>
         AV.init({
@@ -33,14 +34,18 @@
         var query = new AV.Query('Words');
         query.equalTo('user', currentUser);
         query.count().then((count) => {
-            if (count == 0) {
-            }
-            else {
+            if (count == 0) {} else {
                 query.first().then((words) => {
-                    document.getElementById('entry_wish').value = words.get('words');
+                    document.getElementById('entry_wish').innerHTML = words.get('words');
                 });
-        }});
-        function logout() { AV.User.logOut(); window.location.href = "index.html"; }
+            }
+        });
+
+        function logout() {
+            AV.User.logOut();
+            window.location.href = "index.html";
+        }
+
         function upload() {
             var word = document.getElementById("entry_wish").value;
             var currentUser = AV.User.current();
@@ -53,8 +58,7 @@
                     words.set('words', word);
                     words.set('user', currentUser);
                     words.save();
-                }
-                else {
+                } else {
                     query.first().then((words) => {
                         words.set('words', word);
                         words.set('user', currentUser);
@@ -62,7 +66,7 @@
                     })
                 }
             });
-            document.getElementById("message").innerHTML = word;
+            document.getElementById("message").innerHTML = "上传成功";
         }
     </script>
 </body>

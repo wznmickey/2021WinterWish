@@ -3,20 +3,21 @@
 
 <head>
     <title>2021WinterWish</title>
-
+    <link rel="stylesheet" type="text/css" href="style1.css">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 </head>
+
 
 <body>
 
     <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
 
-
-    <input placeholder="输入邮箱" type="text" id="entry_email" value="">
-    <input placeholder="输入密码" type="password" id="entry_pass" value="">
-
-    <button type="button" id="entry_btn" onclick="sign()"
-        style="background-color: rgba(255, 255, 255, .2);">登录/注册</button>
-    <div id="message">
+    <div class="index">
+        <p><input placeholder="  请输入邮箱" type="email" id="entry_email" value="" class="inputA" pattern=".+@sjtu.edu.cn" title="请输入交大邮箱" required></p>
+        <p><input placeholder="  请输入密码" type="password" id="entry_pass" value="" class="inputA"></p>
+        <button type="button" id="entry_btn" onclick="sign()" style="background-color: rgba(255, 255, 255, .2); " class="inputB">登录/注册</button>
+        <div id="message">
+        </div>
     </div>
     <script>
         AV.init({
@@ -24,6 +25,11 @@
             appKey: "Hgm2pDpYapTv2BJ0LCBuIaGP",
             serverURL: "https://umjiwinterwish2021.wznmickey.com"
         });
+        const currentUser = AV.User.current();
+        if (currentUser) {
+            window.location.href = "write.html";
+        }
+
         function sign() {
             const user = new AV.User();
 
@@ -35,26 +41,24 @@
 
             user.set('gender', 'secret');
 
-            user.signUp().then(function (loginedUser) {
-                AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function (loginedUser) {
+            user.signUp().then(function(loginedUser) {
+                AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function(loginedUser) {
                     window.location.href = "write.html";
-                }, function (error) {
-                    document.getElementById("message").innerHTML = "注册错误";
+                }, function(error) {
+                    document.getElementById("message").innerHTML = "注册错误，请确认密码或邮箱，邮箱应为交大邮箱";
                 });
-            }, (function (error) {
-                AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function (loginedUser) {
+            }, (function(error) {
+                AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function(loginedUser) {
                     window.location.href = "write.html";
-                }, function (error) {
-                    document.getElementById("message").innerHTML = "登录错误";
+                }, function(error) {
+                    document.getElementById("message").innerHTML = "登录错误，请确认密码或邮箱，邮箱应为交大邮箱";
                 });
             }));
             const currentUser = AV.User.current();
             if (currentUser) {
                 window.location.href = "write.html";
-            } else {
-            }
+            } else {}
         }
-
     </script>
 </body>
 
