@@ -13,9 +13,11 @@
     <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
 
     <div class="index">
-        <p><input placeholder="  请输入邮箱" type="email" id="entry_email" value="" class="inputA" pattern=".+@sjtu.edu.cn" title="请输入交大邮箱" required></p>
+        <label for="entry_email"></label><br>
+        <p><input id="entry_email" type="email" size="64" maxLength="64" required placeholder="  请输入邮箱" class="inputA" pattern=".+@sjtu.edu.cn" title="请输入交大邮箱"></p>
+        <label for="password"></label><br>
         <p><input placeholder="  请输入密码" type="password" id="entry_pass" value="" class="inputA"></p>
-        <button type="button" id="entry_btn" onclick="sign()" style="background-color: rgba(255, 255, 255, .2); " class="inputB">登录/注册</button>
+        <input type="submit" value="注册/登录" id="entry_btn" onclick="sign()" style="background-color: rgba(255, 255, 255, .2); " class="inputB"></button>
         <div id="message">
         </div>
     </div>
