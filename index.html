@@ -13,13 +13,15 @@
     <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.9.0/dist/av-min.js"></script>
 
     <div class="index">
-        <label for="entry_email"></label><br>
-        <p><input id="entry_email" type="email" size="64" maxLength="64" required placeholder="  请输入邮箱" class="inputA" pattern=".+@sjtu.edu.cn" title="请输入交大邮箱"></p>
-        <label for="password"></label><br>
-        <p><input placeholder="  请输入密码" type="password" id="entry_pass" value="" class="inputA"></p>
-        <input type="submit" value="注册/登录" id="entry_btn" onclick="sign()" style="background-color: rgba(255, 255, 255, .2); " class="inputB"></button>
-        <div id="message">
-        </div>
+        <form onsubmit="return false">
+            <label for="entry_email"></label><br>
+            <p><input id="entry_email" type="email" size="64" maxLength="64" required placeholder="  请输入邮箱" class="inputA" pattern=".+@sjtu.edu.cn" title="请输入交大邮箱"></p>
+            <label for="password"></label><br>
+            <p><input placeholder="  请输入密码" type="password" id="entry_pass" value="" class="inputA"></p>
+            <input type="submit" value="注册/登录" id="entry_btn" onclick="sign()" style="background-color: rgba(255, 255, 255, .2); " class="inputB"></button>
+            <div id="message">
+            </div>
+        </form>
     </div>
     <script>
         AV.init({
@@ -42,20 +44,24 @@
             //user.setMobilePhoneNumber('+8618200008888');
 
             user.set('gender', 'secret');
-
-            user.signUp().then(function(loginedUser) {
-                AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function(loginedUser) {
-                    window.location.href = "write.html";
-                }, function(error) {
-                    document.getElementById("message").innerHTML = "注册错误，请确认密码或邮箱，邮箱应为交大邮箱";
-                });
-            }, (function(error) {
-                AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function(loginedUser) {
-                    window.location.href = "write.html";
-                }, function(error) {
-                    document.getElementById("message").innerHTML = "登录错误，请确认密码或邮箱，邮箱应为交大邮箱";
-                });
-            }));
+            var aim = /.+@sjtu.edu.cn/;
+            if (aim.test(document.getElementById("entry_email").value) == true) {
+                user.signUp().then(function(loginedUser) {
+                    AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function(loginedUser) {
+                        window.location.href = "write.html";
+                    }, function(error) {
+                        document.getElementById("message").innerHTML = "注册错误，请确认密码或邮箱，邮箱应为交大邮箱";
+                    });
+                }, (function(error) {
+                    AV.User.logIn(document.getElementById("entry_email").value, document.getElementById("entry_pass").value).then(function(loginedUser) {
+                        window.location.href = "write.html";
+                    }, function(error) {
+                        document.getElementById("message").innerHTML = "登录错误，请确认密码或邮箱，邮箱应为交大邮箱";
+                    });
+                }));
+            } else {
+                document.getElementById("message").innerHTML = "请确认邮箱，邮箱应为交大邮箱";
+            }
             const currentUser = AV.User.current();
             if (currentUser) {
                 window.location.href = "write.html";
