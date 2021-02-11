@@ -12,7 +12,7 @@ body {
 
 .inputA {
     border-radius: 5vw;
-    font-size: xx-large;
+    font-size: medium;
     height: 5vh;
     width: 60vw;
     background-color: #7E887D;
@@ -25,7 +25,7 @@ body {
 
 .inputB {
     border-radius: 5vw;
-    font-size: x-large;
+    font-size: medium;
     height: 5vh;
     width: 40vw;
     /*background-color: #7E887D;*/
@@ -45,7 +45,7 @@ body {
     }
     .inputA {
         border-radius: 5vw;
-        font-size: xx-large;
+        font-size: medium;
         height: 5vh;
         width: 60vw;
         background-color: #7E887D;
@@ -56,7 +56,7 @@ body {
     }
     .inputB {
         border-radius: 5vw;
-        font-size: x-large;
+        font-size: medium;
         height: 5vh;
         width: 40vw;
         /*background-color: #7E887D;*/
